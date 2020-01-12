@@ -42,7 +42,7 @@ public class Shape {
 
     public void setRandomShape(){
         Random r = new Random();
-        int x = Math.abs(r.nextInt())%7 + 1;
+        int x = Math.abs(r.nextInt()) % 7 + 1;
         Tetrominos[] values = Tetrominos.values();
         setShape(values[x]);
     }

@@ -14,8 +14,7 @@ public class GameFrame extends JFrame {
         Board board = new Board(this);
         add(board);
 
-        board.newPiece();
-        board.repaint();
+        board.start();
 
         setSize(200, 400);
         setTitle("TETRIS");

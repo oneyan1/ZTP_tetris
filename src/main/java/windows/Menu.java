@@ -22,7 +22,7 @@ public class Menu {
         newGameBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                newGame();
+                newGame(frame);
             }
         });
         scoreListBtn.addActionListener(new ActionListener() {
@@ -49,7 +49,8 @@ public class Menu {
         return newBtn;
     }
 
-    private void newGame(){
+    private void newGame(JFrame panel){
+        panel.dispose();
         GameFrame gameFrame = new GameFrame();
         gameFrame.setLocationRelativeTo(null);
         gameFrame.setVisible(true);
