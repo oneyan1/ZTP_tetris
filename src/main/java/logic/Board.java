@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Board extends JPanel implements ActionListener {
 
@@ -32,6 +34,7 @@ public class Board extends JPanel implements ActionListener {
         statusBar = frame.getStatusbar();
         board = new Tetrominos[BOARD_HEIGHT * BOARD_WIDTH];
         clearBoard();
+        addKeyListener(new MyTetrisAdapter());
     }
 
     @Override
@@ -122,7 +125,7 @@ public class Board extends JPanel implements ActionListener {
         if (curPiece.getShape() != Tetrominos.NO_SHAPE) {
             for (int i = 0; i < 4; ++i) {
                 int x = curX + curPiece.getX(i);
-                int y = curY + curPiece.getY(i);
+                int y = curY - curPiece.getY(i);
                 drawSquare(g, x * squareWidth(), boardTop + (BOARD_HEIGHT - y - 1) * squareHeight(), curPiece.getShape());
             }
         }
@@ -154,7 +157,7 @@ public class Board extends JPanel implements ActionListener {
     public boolean tryMove(Shape newPiece, int newX, int newY) {
         for (int i = 0; i < 4; i++) {
             int x = newX + newPiece.getX(i);
-            int y = newY + newPiece.getY(i);
+            int y = newY - newPiece.getY(i);
 
             if (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT) return false;
             if (shapeAt(x, y) != Tetrominos.NO_SHAPE) return false;
@@ -168,15 +171,15 @@ public class Board extends JPanel implements ActionListener {
 
     private void removeFullLines(){
         int numFullLines = 0;
-        for (int i = BOARD_HEIGHT-1; i >= 0; --i) {
-            boolean linesIsFull = true;
+        for (int i = BOARD_HEIGHT - 1; i >= 0; --i) {
+            boolean lineIsFull = true;
             for (int j = 0; j < BOARD_WIDTH; ++j) {
                 if(shapeAt(j, i) == Tetrominos.NO_SHAPE){
-                    linesIsFull = false;
+                    lineIsFull = false;
                     break;
                 }
             }
-            if(linesIsFull){
+            if(lineIsFull){
                 ++numFullLines;
                 for (int k = i; k < BOARD_HEIGHT - 1 ; ++k) {
                     for (int j = 0; j < BOARD_WIDTH; ++j) {
@@ -201,6 +204,41 @@ public class Board extends JPanel implements ActionListener {
             --newY;
         }
         pieceDropped();
+    }
+
+    class MyTetrisAdapter extends KeyAdapter{
+        @Override
+        public void keyPressed(KeyEvent key) {
+            if(!isStarted || curPiece.getShape() == Tetrominos.NO_SHAPE) return;
+
+            int keyCode = key.getKeyCode();
+            if(keyCode == 'p' || keyCode == 'P') pause();
+            if(isPaused) return;
+
+            switch (keyCode){
+                case KeyEvent.VK_LEFT:
+                    tryMove(curPiece, curX-1, curY);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    tryMove(curPiece, curX+1, curY);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    tryMove(curPiece.rotateRight(), curX, curY);
+                    break;
+                case KeyEvent.VK_UP:
+                    tryMove(curPiece.rotateLeft(), curX, curY);
+                    break;
+                case KeyEvent.VK_SPACE:
+                    dropDown();
+                    break;
+                case 'd':
+                    oneLineDown();
+                    break;
+                case 'D':
+                    oneLineDown();
+                    break;
+            }
+        }
     }
 
 }
