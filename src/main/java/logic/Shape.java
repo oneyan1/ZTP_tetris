@@ -1,24 +1,37 @@
 package logic;
 
+import logic.Shapes.ShapesCreator.*;
+
 import java.util.Random;
 
 public class Shape {
-    private Tetrominos pieceShape;
-    private int[][] coords;
+    public Tetrominos pieceShape;
+    public int[][] coords = {{0,0},{0,0},{0,0},{0,0}};
 
     public Shape(){
         coords = new int[4][2];
-        setShape(Tetrominos.NO_SHAPE);
+        //setShape(Tetrominos.NO_SHAPE);
     }
 
     public void setShape(Tetrominos shape){
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 2 ; j++) {
-                coords[i][j] = shape.coords[i][j];
-            }
-        }
+//        coordsTable = new int[][][] {
+//                {{0,0},{0,0},{0,0},{0,0}},
+//                {{0,-1},{0,0},{0,1},{0,2}},
+//                {{0,0},{1,0},{0,1},{1,1}},
+//                {{-1,0},{0,0},{1,0},{0,1}},
+//                {{1,-1},{0,-1},{0,0},{0,1}},
+//                {{-1,-1},{0,-1},{0,0},{0,1}},
+//                {{0,-1},{0,0},{1,0},{1,1}},
+//                {{0,-1},{0,0},{-1,0},{-1,1}}
+//        };
+//        for (int i = 0; i < 4; i++) {
+//            for (int j = 0; j < 2 ; j++) {
+//                coords[i][j] = coordsTable[shape.ordinal()][i][j];
+//            }
+//        }
         pieceShape = shape;
     }
+
 
     public void setX(int index, int x){
         coords[index][0] = x;
@@ -42,9 +55,19 @@ public class Shape {
 
     public void setRandomShape(){
         Random r = new Random();
-        int x = Math.abs(r.nextInt()) % 7 + 1;
-        Tetrominos[] values = Tetrominos.values();
-        setShape(values[x]);
+        int x = Math.abs(r.nextInt()) % 7;
+        ShapesCreator shapes[] = {
+                new CreateIShape(),
+                new CreateJShape(),
+                new CreateLShape(),
+                new CreateOShape(),
+                new CreateSShape(),
+                new CreateTShape(),
+                new CreateZShape()
+        };
+        shapes[x].createShapes().drawShape(shapes[x].getTetrominos(), this);
+        //Tetrominos[] values = Tetrominos.values();
+        //setShape(values[x]);
     }
 
     public int minX(){
