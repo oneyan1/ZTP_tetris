@@ -26,6 +26,7 @@ public class Board extends JPanel implements ActionListener {
     private JLabel statusBar;
     private Shape curPiece;
     private Tetrominos[] board;
+    private ScoreDB score;
 
     public Board(GameFrame frame) {
         setFocusable(true);
@@ -35,6 +36,7 @@ public class Board extends JPanel implements ActionListener {
         board = new Tetrominos[BOARD_HEIGHT * BOARD_WIDTH];
         clearBoard();
         addKeyListener(new MyTetrisAdapter());
+        score = ScoreDB.getInstance();
     }
 
     @Override
@@ -86,6 +88,8 @@ public class Board extends JPanel implements ActionListener {
             curPiece.setShape(Tetrominos.NO_SHAPE);
             timer.stop();
             isStarted = false;
+            score.addScoreLine(numLinesRemoved);
+            score.writList();
             statusBar.setText("Game over");
         }
     }

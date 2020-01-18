@@ -6,32 +6,15 @@ import java.util.Random;
 
 public class Shape {
     public Tetrominos pieceShape;
-    public int[][] coords = {{0,0},{0,0},{0,0},{0,0}};
+    public int[][] coords;
 
     public Shape(){
         coords = new int[4][2];
-        //setShape(Tetrominos.NO_SHAPE);
     }
 
     public void setShape(Tetrominos shape){
-//        coordsTable = new int[][][] {
-//                {{0,0},{0,0},{0,0},{0,0}},
-//                {{0,-1},{0,0},{0,1},{0,2}},
-//                {{0,0},{1,0},{0,1},{1,1}},
-//                {{-1,0},{0,0},{1,0},{0,1}},
-//                {{1,-1},{0,-1},{0,0},{0,1}},
-//                {{-1,-1},{0,-1},{0,0},{0,1}},
-//                {{0,-1},{0,0},{1,0},{1,1}},
-//                {{0,-1},{0,0},{-1,0},{-1,1}}
-//        };
-//        for (int i = 0; i < 4; i++) {
-//            for (int j = 0; j < 2 ; j++) {
-//                coords[i][j] = coordsTable[shape.ordinal()][i][j];
-//            }
-//        }
         pieceShape = shape;
     }
-
 
     public void setX(int index, int x){
         coords[index][0] = x;
@@ -66,8 +49,6 @@ public class Shape {
                 new CreateZShape()
         };
         shapes[x].createShapes().drawShape(shapes[x].getTetrominos(), this);
-        //Tetrominos[] values = Tetrominos.values();
-        //setShape(values[x]);
     }
 
     public int minX(){
