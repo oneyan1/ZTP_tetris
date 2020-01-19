@@ -50,48 +50,4 @@ public class Shape {
         };
         shapes[x].createShapes().drawShape(shapes[x].getTetrominos(), this);
     }
-
-    public int minX(){
-        int min = coords[0][0];
-        for (int i = 0; i < 4 ; i++) {
-            min = Math.min(min, coords[i][0]);
-        }
-        return min;
-    }
-
-    public int minY(){
-        int min = coords[0][1];
-        for (int i = 0; i < 4 ; i++) {
-            min = Math.min(min, coords[i][1]);
-        }
-        return min;
-    }
-
-    // design pattern
-    public Shape rotateLeft(){
-        if(pieceShape == Tetrominos.O_SHAPE){
-            return this;
-        }
-        Shape result = new Shape();
-        result.pieceShape = pieceShape;
-        for (int i = 0; i < 4 ; i++) {
-            result.setX(i, getY(i));
-            result.setY(i, -getX(i));
-        }
-        return result;
-    }
-
-    public Shape rotateRight(){
-        if(pieceShape == Tetrominos.O_SHAPE){
-            return this;
-        }
-        Shape result = new Shape();
-        result.pieceShape = pieceShape;
-        for (int i = 0; i < 4 ; i++) {
-            result.setX(i, -getY(i));
-            result.setY(i, getX(i));
-        }
-        return result;
-    }
-
 }

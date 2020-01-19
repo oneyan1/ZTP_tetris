@@ -1,5 +1,8 @@
 package logic;
 
+import logic.Rotate.Rotate;
+import logic.Rotate.RotateLeft;
+import logic.Rotate.RotateRight;
 import windows.GameFrame;
 
 import javax.swing.*;
@@ -27,6 +30,7 @@ public class Board extends JPanel implements ActionListener {
     private Shape curPiece;
     private Tetrominos[] board;
     private ScoreDB score;
+    private Rotate rotate;
 
     public Board(GameFrame frame) {
         setFocusable(true);
@@ -82,7 +86,7 @@ public class Board extends JPanel implements ActionListener {
     public void newPiece() {
         curPiece.setRandomShape();
         curX = BOARD_WIDTH / 2 + 1;
-        curY = BOARD_HEIGHT - 1 + curPiece.minX();
+        curY = BOARD_HEIGHT - 1;
 
         if(!tryMove(curPiece, curX, curY-1)){
             curPiece.setShape(Tetrominos.NO_SHAPE);
@@ -227,10 +231,12 @@ public class Board extends JPanel implements ActionListener {
                     tryMove(curPiece, curX+1, curY);
                     break;
                 case KeyEvent.VK_DOWN:
-                    tryMove(curPiece.rotateRight(), curX, curY);
+                    rotate = new RotateRight();
+                    tryMove(rotate.rotate(curPiece), curX, curY);
                     break;
                 case KeyEvent.VK_UP:
-                    tryMove(curPiece.rotateLeft(), curX, curY);
+                    rotate = new RotateLeft();
+                    tryMove(rotate.rotate(curPiece), curX, curY);
                     break;
                 case KeyEvent.VK_SPACE:
                     dropDown();
