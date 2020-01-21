@@ -15,7 +15,6 @@ public class GameFrame extends JFrame {
         add(board);
 
         board.start();
-
         setSize(200, 400);
         setTitle("TETRIS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);

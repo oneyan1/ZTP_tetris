@@ -1,5 +1,9 @@
 package logic;
 
+import logic.GameControl.GameContext;
+import logic.GameControl.GameState;
+import logic.GameControl.Paused;
+import logic.GameControl.Running;
 import logic.Rotate.Rotate;
 import logic.Rotate.RotateLeft;
 import logic.Rotate.RotateRight;
@@ -14,23 +18,25 @@ import java.awt.event.KeyEvent;
 
 public class Board extends JPanel implements ActionListener {
 
+    //public to private and added getmethod
     private static final int BOARD_HEIGHT = 22;
     private static final int BOARD_WIDTH = 10;
     private static final Color[] COLORS = {new Color(0, 0, 0), new Color(204, 102, 102),
             new Color(102, 204, 102), new Color(102, 102, 204), new Color(204, 204, 102),
             new Color(204, 102, 204), new Color(102, 204, 204), new Color(218, 170, 0)};
-    private Timer timer;
-    private boolean isFallingFinished = false;
-    private boolean isStarted = false;
-    private boolean isPaused = false;
-    private int numLinesRemoved = 0;
+    public Timer timer;
+    public boolean isFallingFinished = false;
+    public boolean isStarted = false;
+    public boolean isPaused = false;
+    public int numLinesRemoved = 0;
     private int curX = 0;
     private int curY = 0;
-    private JLabel statusBar;
+    public JLabel statusBar;
     private Shape curPiece;
     private Tetrominos[] board;
     private ScoreDB score;
     private Rotate rotate;
+    private GameContext gc;
 
     public Board(GameFrame frame) {
         setFocusable(true);
@@ -41,6 +47,7 @@ public class Board extends JPanel implements ActionListener {
         clearBoard();
         addKeyListener(new MyTetrisAdapter());
         score = ScoreDB.getInstance();
+        gc = new GameContext();
     }
 
     @Override
@@ -49,6 +56,7 @@ public class Board extends JPanel implements ActionListener {
             isFallingFinished = false;
             newPiece();
         } else {
+            gc.changeGameState();
             oneLineDown();
         }
     }
@@ -119,6 +127,7 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+
         Dimension size = getSize();
         int boardTop = (int) size.getHeight() - BOARD_HEIGHT * squareHeight();
         for (int i = 0; i < BOARD_HEIGHT; i++) {
@@ -146,21 +155,23 @@ public class Board extends JPanel implements ActionListener {
         numLinesRemoved = 0;
         clearBoard();
         newPiece();
+        gc.setGameState(new Running(this));
         timer.start();
     }
 
-    public void pause() {
-        if (!isStarted) return;
-        isPaused = !isPaused;
-        if (isPaused) {
-            timer.stop();
-            statusBar.setText("Paused");
-        } else {
-            timer.start();
-            statusBar.setText(String.valueOf(numLinesRemoved));
-        }
-        repaint();
-    }
+//    public void pause() {
+//        isPaused = !isPaused;
+////        if (!isStarted) return;
+////        isPaused = !isPaused;
+////        if (isPaused) {
+////            timer.stop();
+////            statusBar.setText("Paused");
+////        } else {
+////            timer.start();
+////            statusBar.setText(String.valueOf(numLinesRemoved));
+////        }
+////        repaint();
+//    }
 
     public boolean tryMove(Shape newPiece, int newX, int newY) {
         for (int i = 0; i < 4; i++) {
@@ -220,7 +231,12 @@ public class Board extends JPanel implements ActionListener {
             if(!isStarted || curPiece.getShape() == Tetrominos.NO_SHAPE) return;
 
             int keyCode = key.getKeyCode();
-            if(keyCode == 'p' || keyCode == 'P') pause();
+            if(keyCode == 'p' || keyCode == 'P'){
+                //pause();
+                isPaused = !isPaused;
+
+                repaint();
+            }
             if(isPaused) return;
 
             switch (keyCode){
