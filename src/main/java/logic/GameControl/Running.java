@@ -11,9 +11,10 @@ public class Running implements GameState {
     @Override
     public void changeGameState(GameContext activity) {
         if(!board.isPaused){
-            board.timer.start();
+            //board.timer.start();
             board.statusBar.setText(String.valueOf(board.numLinesRemoved));
-            //board.repaint();
+            board.repaint();
+            System.out.println("stan - Runnig");
         }else{
             activity.setGameState(new Paused(board));
         }

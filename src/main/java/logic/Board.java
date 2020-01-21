@@ -232,10 +232,10 @@ public class Board extends JPanel implements ActionListener {
 
             int keyCode = key.getKeyCode();
             if(keyCode == 'p' || keyCode == 'P'){
-                //pause();
                 isPaused = !isPaused;
-
-                repaint();
+                if(!isPaused){
+                    timer.start();
+                }
             }
             if(isPaused) return;
 

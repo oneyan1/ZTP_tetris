@@ -13,7 +13,8 @@ public class Paused implements GameState {
         if (board.isPaused) {
             board.timer.stop();
             board.statusBar.setText("Paused");
-            //board.repaint();
+            board.repaint();
+            System.out.println("Stan - Paused");
         }
         else{
             activity.setGameState(new Running(board));
