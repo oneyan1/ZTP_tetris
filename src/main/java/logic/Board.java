@@ -29,14 +29,14 @@ public class Board extends JPanel implements ActionListener {
     public boolean isStarted = false;
     public boolean isPaused = false;
     public int numLinesRemoved = 0;
-    private int curX = 0;
-    private int curY = 0;
+    public int curX = 0;
+    public int curY = 0;
     public JLabel statusBar;
-    private Shape curPiece;
-    private Tetrominos[] board;
-    private ScoreDB score;
-    private Rotate rotate;
-    private GameContext gc;
+    public Shape curPiece;
+    public Tetrominos[] board;
+    public ScoreDB score;
+    public Rotate rotate;
+    public GameContext gc;
 
     public Board(GameFrame frame) {
         setFocusable(true);
@@ -104,9 +104,9 @@ public class Board extends JPanel implements ActionListener {
             score.writList();
             statusBar.setText("Game over");
         }
-    }
+}
 
-    private void oneLineDown() {
+    public void oneLineDown() {
         if(!tryMove(curPiece, curX, curY-1)){
             pieceDropped();
         }
@@ -216,7 +216,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private void dropDown(){
+    public void dropDown(){
         int newY = curY;
         while(newY > 0){
             if(!tryMove(curPiece, curX, newY-1)) break;
@@ -230,43 +230,7 @@ public class Board extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent key) {
             if(!isStarted || curPiece.getShape() == Tetrominos.NO_SHAPE) return;
 
-            int keyCode = key.getKeyCode();
-            if(keyCode == 'p' || keyCode == 'P'){
-                isPaused = !isPaused;
-                if(!isPaused){
-                    timer.start();
-                }
-            }
-
-            stan.keyPressed(key);
-
-            if(isPaused) return;
-
-            switch (keyCode){
-                case KeyEvent.VK_LEFT:
-                    tryMove(curPiece, curX-1, curY);
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    tryMove(curPiece, curX+1, curY);
-                    break;
-                case KeyEvent.VK_DOWN:
-                    rotate = new RotateRight();
-                    tryMove(rotate.rotate(curPiece), curX, curY);
-                    break;
-                case KeyEvent.VK_UP:
-                    rotate = new RotateLeft();
-                    tryMove(rotate.rotate(curPiece), curX, curY);
-                    break;
-                case KeyEvent.VK_SPACE:
-                    dropDown();
-                    break;
-                case 'd':
-                    oneLineDown();
-                    break;
-                case 'D':
-                    oneLineDown();
-                    break;
-            }
+            gc.keyPressed(key);
         }
     }
 

@@ -1,5 +1,7 @@
 package logic.GameControl;
 
+import java.awt.event.KeyEvent;
+
 public class GameContext {
     StatusBar activity;
 
@@ -9,5 +11,9 @@ public class GameContext {
 
     public void drawStatusMesage(){
         activity.drawStatusMessage(this);
+    }
+
+    public void keyPressed(KeyEvent key){
+        activity.keyPressed(key, this);
     }
 }
