@@ -2,7 +2,7 @@ package logic.GameControl;
 
 import logic.Board;
 
-public class Paused implements GameState {
+public class Paused implements StatusBar {
     Board board;
     public Paused(Board board) {
         this.board = board;

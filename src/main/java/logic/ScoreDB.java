@@ -8,10 +8,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+/**
+ *  Klasa przechowująca liste wyników gry,
+ *  działa na zasadzie wzorca Singltone
+ */
 public class ScoreDB {
+    /**
+     *  Lista przechowująca wyniki
+     */
     private ArrayList<Integer> scoreList;
+    /**
+     *  Objekt tej klasy przekazywany na zyczenie klasy-klienta
+     */
     private static ScoreDB scoreDB;
 
+    /**
+     *  privatny konstruktor tworzący nowy objekt listy,
+     *  odczetuje dane wyników z pliku i umieszcza do listy
+     */
     private ScoreDB(){
         scoreList = new ArrayList<>();
         File file = new File("score.txt");
@@ -28,6 +42,12 @@ public class ScoreDB {
         }
     }
 
+    /**
+     * Metoda dostęmpowa do istnejącego objektu tej klasy
+     * w przypadku gdy object nie jest utworząny tworzy go,
+     * w przeciwnym przypadku zwraca juz utworzony
+     * @return objekt tej klasy
+     */
     public static ScoreDB getInstance(){
         if(scoreDB == null){
             scoreDB = new ScoreDB();
@@ -35,6 +55,10 @@ public class ScoreDB {
         return scoreDB;
     }
 
+    /**
+     *  Metoda dostępowa zwraca całą list
+     * @return
+     */
     public ArrayList<Integer> getAllScore(){
         return scoreList;
     }

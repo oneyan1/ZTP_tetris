@@ -7,6 +7,15 @@ import java.util.Random;
 public class Shape {
     public Tetrominos pieceShape;
     public int[][] coords;
+    public ShapesCreator shapes[] = {
+            new CreateIShape(),
+            new CreateJShape(),
+            new CreateLShape(),
+            new CreateOShape(),
+            new CreateSShape(),
+            new CreateTShape(),
+            new CreateZShape()
+    };
 
     public Shape(){
         coords = new int[4][2];
@@ -39,15 +48,7 @@ public class Shape {
     public void setRandomShape(){
         Random r = new Random();
         int x = Math.abs(r.nextInt()) % 7;
-        ShapesCreator shapes[] = {
-                new CreateIShape(),
-                new CreateJShape(),
-                new CreateLShape(),
-                new CreateOShape(),
-                new CreateSShape(),
-                new CreateTShape(),
-                new CreateZShape()
-        };
+
         shapes[x].createShapes().drawShape(shapes[x].getTetrominos(), this);
     }
 }

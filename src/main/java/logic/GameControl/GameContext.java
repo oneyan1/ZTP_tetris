@@ -1,13 +1,13 @@
 package logic.GameControl;
 
 public class GameContext {
-    GameState activity;
+    StatusBar activity;
 
-    public void setGameState(GameState activity){
+    public void setGameState(StatusBar activity){
         this.activity = activity;
     }
 
-    public void changeGameState(){
+    public void drawStatusMesage(){
         activity.drawStatusMessage(this);
     }
 }

@@ -1,6 +1,6 @@
 package logic.GameControl;
 
 
-public interface GameState {
+public interface StatusBar {
     void drawStatusMessage(GameContext activity);
 }

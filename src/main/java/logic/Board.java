@@ -1,7 +1,7 @@
 package logic;
 
 import logic.GameControl.GameContext;
-import logic.GameControl.GameState;
+import logic.GameControl.StatusBar;
 import logic.GameControl.Paused;
 import logic.GameControl.Running;
 import logic.Rotate.Rotate;
@@ -56,7 +56,7 @@ public class Board extends JPanel implements ActionListener {
             isFallingFinished = false;
             newPiece();
         } else {
-            gc.changeGameState();
+            gc.drawStatusMesage();
             oneLineDown();
         }
     }
@@ -237,6 +237,9 @@ public class Board extends JPanel implements ActionListener {
                     timer.start();
                 }
             }
+
+            stan.keyPressed(key);
+
             if(isPaused) return;
 
             switch (keyCode){

@@ -2,7 +2,7 @@ package logic.GameControl;
 
 import logic.Board;
 
-public class Running implements GameState {
+public class Running implements StatusBar {
     Board board;
     public Running(Board board){
         this.board = board;
@@ -10,7 +10,6 @@ public class Running implements GameState {
     @Override
     public void drawStatusMessage(GameContext activity) {
         if(!board.isPaused){
-            //board.timer.start();
             board.statusBar.setText(String.valueOf(board.numLinesRemoved));
             board.repaint();
             System.out.println("stan - Runnig");
