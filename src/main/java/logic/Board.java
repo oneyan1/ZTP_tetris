@@ -26,8 +26,8 @@ public class Board extends JPanel implements ActionListener {
             new Color(204, 102, 204), new Color(102, 204, 204), new Color(218, 170, 0)};
     public Timer timer;
     public boolean isFallingFinished = false;
-    public boolean isStarted = false;
-    public boolean isPaused = false;
+    //public boolean isStarted = false;
+    //public boolean isPaused = false;
     public int numLinesRemoved = 0;
     public int curX = 0;
     public int curY = 0;
@@ -99,7 +99,7 @@ public class Board extends JPanel implements ActionListener {
         if(!tryMove(curPiece, curX, curY-1)){
             curPiece.setShape(Tetrominos.NO_SHAPE);
             timer.stop();
-            isStarted = false;
+            //isStarted = false;
             score.addScoreLine(numLinesRemoved);
             score.writList();
             statusBar.setText("Game over");
@@ -149,8 +149,8 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void start() {
-        if (isPaused) return;
-        isStarted = true;
+        //if (isPaused) return;
+        //isStarted = true;
         isFallingFinished = false;
         numLinesRemoved = 0;
         clearBoard();
@@ -228,8 +228,6 @@ public class Board extends JPanel implements ActionListener {
     class MyTetrisAdapter extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent key) {
-            if(!isStarted || curPiece.getShape() == Tetrominos.NO_SHAPE) return;
-
             gc.keyPressed(key);
         }
     }

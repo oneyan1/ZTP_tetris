@@ -13,13 +13,9 @@ public class Running implements StatusBar {
     }
     @Override
     public void drawStatusMessage(GameContext activity) {
-        if(!board.isPaused){
-            board.statusBar.setText(String.valueOf(board.numLinesRemoved));
-            board.repaint();
-            System.out.println("stan - Runnig");
-        }else{
-            activity.setGameState(new Paused(board));
-        }
+        board.statusBar.setText(String.valueOf(board.numLinesRemoved));
+        board.repaint();
+        System.out.println("stan - Runnig");
     }
 
     @Override
@@ -48,8 +44,6 @@ public class Running implements StatusBar {
                 board.oneLineDown();
                 break;
             case KeyEvent.VK_P:
-                System.out.println("pause");
-
                 activity.setGameState(new Paused(board));
                 break;
             case 'D':
