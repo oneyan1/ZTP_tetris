@@ -8,6 +8,6 @@ public class GameContext {
     }
 
     public void changeGameState(){
-        activity.changeGameState(this);
+        activity.drawStatusMessage(this);
     }
 }

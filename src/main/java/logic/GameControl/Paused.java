@@ -9,7 +9,7 @@ public class Paused implements GameState {
     }
 
     @Override
-    public void changeGameState(GameContext activity) {
+    public void drawStatusMessage(GameContext activity) {
         if (board.isPaused) {
             board.timer.stop();
             board.statusBar.setText("Paused");
